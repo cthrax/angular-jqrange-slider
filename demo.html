@@ -1,0 +1,29 @@
+<html ng-app="app">
+<head>
+    <link rel="stylesheet" href="bower_components/jQRangeSlider-5.7.0/dest/css/iThing.css" type="text/css" />
+    <script type="text/javascript" src="bower_components/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/jquery-ui/jquery-ui.js"></script>
+    <script type="text/javascript" src="bower_components/angular/angular.js"></script>
+    <script type="text/javascript" src="bower_components/jQRangeSlider-5.7.0/dest/jQAllRangeSliders-withRuler.js"></script>
+    <script type="text/javascript" src="src/angular-jqrange-silder.js"></script>
+    <script type="text/javascript" src="demo.js"></script>
+</head>
+<body ng-controller="mainCtrl">
+<div style="height: 400px; width: 600px;">
+    <jqrange-slider options="options" selected-range="range"></jqrange-slider>
+</div>
+<pre>{{range | json}}</pre>
+<div>
+    Bounds min: <input type="text" ng-model="options.jqOptions.bounds.min"/>
+</div>
+<div>
+    Bounds max: <input type="text" ng-model="options.jqOptions.bounds.max"/>
+</div>
+<div>
+    Range min: <input type="text" ng-model="range.min" />
+</div>
+<div>
+    Range max: <input type="text" ng-model="range.max" />
+</div>
+</body>
+</html>

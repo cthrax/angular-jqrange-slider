@@ -1,0 +1,35 @@
+{
+  "name": "angular-jqrange-slider",
+  "version": "1.0.0",
+  "description": "Angular wrapper around jqrange-slider",
+  "main": "src/angular-jqrange-slider.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cthrax/angular-jqrange-slider.git"
+  },
+  "keywords": [
+    "angular",
+    "jqrange-slider",
+    "slider",
+    "range"
+  ],
+  "author": "Myles Bostwick <github@zithora.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cthrax/angular-jqrange-slider/issues"
+  },
+  "homepage": "https://github.com/cthrax/angular-jqrange-slider",
+  "devDependencies": {
+    "karma": "^0.12.28",
+    "karma-mocha": "^0.1.10",
+    "karma-chai-plugins": "git+https://github.com/cthrax/karma-chai-plugins.git#master",
+    "karma-coverage": "^0.1.5",
+    "karma-mocha": "^0.1.6",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-spec-reporter": "0.0.13",
+    "mocha": "^2.0.1"
+  }
+}
