@@ -60,6 +60,7 @@ angular.module("jqrange-slider", [])
 
             // Watch external changes to selection and match on slider
             $scope.$watch("selectedRange", function(nv) {
+                console.log("Range changed %o", nv);
                 if (!internalChange) {
                     var bounds = service.values();
                     if (!!nv && nv.min !== bounds.min && nv.max !== bounds.max) {
@@ -70,7 +71,7 @@ angular.module("jqrange-slider", [])
                 } else {
                     console.log("internal change");
                 }
-            });
+            }, true);
 
             // Watch for external changes to bounds and match on slider
             $scope.$watch("options.jqOptions.bounds", function(nv) {
@@ -94,6 +95,7 @@ angular.module("jqrange-slider", [])
                     $scope.selectedRange.min = data.values.min.getTime();
                     $scope.selectedRange.max = data.values.max.getTime();
                 })());
+                internalChange = false;
             });
 
             // Pass the service out so external control of the component can be had
