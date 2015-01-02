@@ -60,7 +60,6 @@ angular.module("jqrange-slider", [])
 
             // Watch external changes to selection and match on slider
             $scope.$watch("selectedRange", function(nv) {
-                console.log("Range changed %o", nv);
                 if (!internalChange) {
                     var bounds = service.values();
                     if (!!nv && nv.min !== bounds.min && nv.max !== bounds.max) {
