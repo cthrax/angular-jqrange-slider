@@ -91,8 +91,8 @@ angular.module("jqrange-slider", [])
             $(ele).bind("userValuesChanged", function(evt, data) {
                 internalChange = true;
                 $scope.$apply((function() {
-                    $scope.selectedRange.min = data.values.min.getTime();
-                    $scope.selectedRange.max = data.values.max.getTime();
+                    $scope.selectedRange.min = data.values.min;
+                    $scope.selectedRange.max = data.values.max;
                 })());
                 internalChange = false;
             });
