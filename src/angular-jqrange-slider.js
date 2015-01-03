@@ -57,35 +57,31 @@ angular.module("jqrange-slider", [])
             }
 
             var service = new JqrangeService(ele, constructor);
-            var internalChange = false;
 
             // Create the element
             constructor.call($(ele), options.jqOptions);
 
             // Watch external changes to selection and match on slider
             $scope.$watch("options.selectedRange", function(nv, ov) {
-                if (!internalChange) {
-                    // Only change values if there's actually a change
-                    if (!!nv
-                        && !!ov
-                        && nv.min.getTime() !== ov.min.getTime()
-                        && nv.max.getTime() !== ov.max.getTime()) {
+                // Only change values if there's actually a change
+                if (!!nv
+                    && !!ov
+                    && (nv.min.getTime() !== ov.min.getTime() || nv.max.getTime() !== ov.max.getTime())) {
 
-                        var bounds = service.values();
-                        if (!!nv && nv.min.getTime() !== bounds.min.getTime() && nv.max.getTime() !== bounds.max.getTime()) {
-                            service.values(nv.min, nv.max);
-                        } else {
-                            service.values(bounds.min, bounds.max);
-                        }
+                    var bounds = service.values();
+                    if (!!nv && nv.min.getTime() !== bounds.min.getTime() && nv.max.getTime() !== bounds.max.getTime()) {
+                        service.values(nv.min, nv.max);
+                    } else {
+                        service.values(bounds.min, bounds.max);
                     }
-                } else {
-                    console.log("internal change");
                 }
             });
 
             // Watch for external changes to bounds and match on slider
-            $scope.$watch("options.jqOptions.bounds", function(nv) {
-                if (!!nv) {
+            $scope.$watch("options.jqOptions.bounds", function(nv, ov) {
+                if (!!nv
+                && !!ov
+                && (nv.min.getTime() !== ov.min.getTime() || nv.max.getTime() !== ov.max.getTime())) {
                     var min, max;
                     try {
                         min = new Date(nv.min);
@@ -99,11 +95,9 @@ angular.module("jqrange-slider", [])
 
             // Watch for user changes to selection and notify angular.
             $(ele).bind("userValuesChanged", function(evt, data) {
-                internalChange = true;
                 $scope.$apply((function() {
                     $scope.options.selectedRange = data.values;
                 })());
-                internalChange = false;
             });
 
             // Pass the service out so external control of the component can be had
