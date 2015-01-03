@@ -111,8 +111,7 @@ angular.module("jqrange-slider", [])
             link: link,
             template: "<div></div>",
             scope: {
-                options: "=",
-                selectedRange: "="
+                options: "="
             }
         };
     });
