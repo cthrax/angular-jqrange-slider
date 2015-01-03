@@ -88,14 +88,13 @@ angular.module("jqrange-slider", [])
                         console.log("Invalid date");
                     }
                 }
-            }, true);
+            });
 
             // Watch for user changes to selection and notify angular.
             $(ele).bind("userValuesChanged", function(evt, data) {
                 internalChange = true;
                 $scope.$apply((function() {
-                    $scope.selectedRange.min = data.values.min;
-                    $scope.selectedRange.max = data.values.max;
+                    $scope.selectedRange = data.values;
                 })());
                 internalChange = false;
             });
