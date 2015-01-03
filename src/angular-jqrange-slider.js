@@ -63,13 +63,20 @@ angular.module("jqrange-slider", [])
             constructor.call($(ele), options.jqOptions);
 
             // Watch external changes to selection and match on slider
-            $scope.$watch("options.selectedRange", function(nv) {
+            $scope.$watch("options.selectedRange", function(nv, ov) {
                 if (!internalChange) {
-                    var bounds = service.values();
-                    if (!!nv && nv.min !== bounds.min && nv.max !== bounds.max) {
-                        service.values(nv.min, nv.max);
-                    } else {
-                        service.values(bounds.min, bounds.max);
+                    // Only change values if there's actually a change
+                    if (!!nv
+                        && !!ov
+                        && nv.min.getTime() !== ov.min.getTime()
+                        && nv.max.getTime() !== ov.max.getTime()) {
+
+                        var bounds = service.values();
+                        if (!!nv && nv.min.getTime() !== bounds.min.getTime() && nv.max.getTime() !== bounds.max.getTime()) {
+                            service.values(nv.min, nv.max);
+                        } else {
+                            service.values(bounds.min, bounds.max);
+                        }
                     }
                 } else {
                     console.log("internal change");
