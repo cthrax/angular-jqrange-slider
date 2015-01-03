@@ -11,7 +11,7 @@ angular.module("app", ['jqrange-slider'])
         };
 
         $scope.range = {
-            min: 0,
-            max: 10000
+            min: new Date(0),
+            max: new Date(86401000)
         };
     });

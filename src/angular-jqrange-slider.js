@@ -52,6 +52,10 @@ angular.module("jqrange-slider", [])
                 constructor = $(ele).dateRangeSlider;
             }
 
+            if (!!$scope.options.jqOptions && !$scope.options.jqOptions.defaultValues) {
+                $scope.options.jqOptions.defaultValues = $scope.selectedRange;
+            }
+
             var service = new JqrangeService(ele, constructor);
             var internalChange = false;
 
@@ -74,7 +78,6 @@ angular.module("jqrange-slider", [])
 
             // Watch for external changes to bounds and match on slider
             $scope.$watch("options.jqOptions.bounds", function(nv) {
-                console.log("Bounds changed", nv);
                 if (!!nv) {
                     var min, max;
                     try {
