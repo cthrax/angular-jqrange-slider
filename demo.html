@@ -10,7 +10,7 @@
 </head>
 <body ng-controller="mainCtrl">
 <div style="height: 400px; width: 600px;">
-    <jqrange-slider options="options" selected-range="range"></jqrange-slider>
+    <jqrange-slider options="options" ></jqrange-slider>
 </div>
 <pre>{{range | json}}</pre>
 <div>
@@ -20,10 +20,10 @@
     Bounds max: <input type="date" ng-model="options.jqOptions.bounds.max"/>
 </div>
 <div>
-    Range min: <input type="date" ng-model="range.min" />
+    Range min: <input type="date" ng-model="options.selectedRange.min" />
 </div>
 <div>
-    Range max: <input type="date" ng-model="range.max" />
+    Range max: <input type="date" ng-model="options.selectedRange.max" />
 </div>
 </body>
 </html>

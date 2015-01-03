@@ -53,7 +53,7 @@ angular.module("jqrange-slider", [])
             }
 
             if (!!$scope.options.jqOptions && !$scope.options.jqOptions.defaultValues) {
-                $scope.options.jqOptions.defaultValues = $scope.selectedRange;
+                $scope.options.jqOptions.defaultValues = $scope.options.selectedRange;
             }
 
             var service = new JqrangeService(ele, constructor);
@@ -63,7 +63,7 @@ angular.module("jqrange-slider", [])
             constructor.call($(ele), options.jqOptions);
 
             // Watch external changes to selection and match on slider
-            $scope.$watch("selectedRange", function(nv) {
+            $scope.$watch("options.selectedRange", function(nv) {
                 if (!internalChange) {
                     var bounds = service.values();
                     if (!!nv && nv.min !== bounds.min && nv.max !== bounds.max) {
@@ -74,7 +74,7 @@ angular.module("jqrange-slider", [])
                 } else {
                     console.log("internal change");
                 }
-            }, true);
+            });
 
             // Watch for external changes to bounds and match on slider
             $scope.$watch("options.jqOptions.bounds", function(nv) {
@@ -94,7 +94,7 @@ angular.module("jqrange-slider", [])
             $(ele).bind("userValuesChanged", function(evt, data) {
                 internalChange = true;
                 $scope.$apply((function() {
-                    $scope.selectedRange = data.values;
+                    $scope.options.selectedRange = data.values;
                 })());
                 internalChange = false;
             });
