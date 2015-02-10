@@ -17,8 +17,8 @@ angular.module("jqrange-slider", [])
             "min",
             "max",
             "resize",
-            "scrollleft",
-            "scrollright",
+            "scrollLeft",
+            "scrollRight",
             "values",
             "zoomIn",
             "zoomOut"
