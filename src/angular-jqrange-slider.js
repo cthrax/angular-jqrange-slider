@@ -100,6 +100,11 @@ angular.module("jqrange-slider", [])
                 })());
             });
 
+            // Watch for user changes to selection and notify angular.
+            $(ele).bind("valuesChanging", function(evt, data) {
+                $scope.$emit('sliderValuesChanging', data.values)
+            });
+
             // Pass the service out so external control of the component can be had
             if (typeof options.onApiReady === "function") {
                 options.onApiReady(service);
