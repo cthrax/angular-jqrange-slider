@@ -39,6 +39,11 @@ angular.module("jqrange-slider", [])
             };
         });
 
+        JqrangeService.prototype.synchronize = function(bounds, selectedValues) {
+            this.slider.apply($(this.ele), ['bounds', bounds.min, bounds.max]);
+            this.slider.apply($(this.ele), ['values', selectedValues.min, selectedValues.max]);
+        };
+
         return JqrangeService;
 
     })
