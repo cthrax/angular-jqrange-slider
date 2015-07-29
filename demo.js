@@ -13,4 +13,8 @@ angular.module("app", ['jqrange-slider'])
                 max: new Date(86401000)
             }
         };
+
+        $scope.redraw = function() {
+            $scope.$broadcast('recreateSlider');
+        }
     });

@@ -44,71 +44,83 @@ angular.module("jqrange-slider", [])
     })
     .directive("jqrangeSlider", function(DEFAULTS, JqrangeService) {
         var link = function($scope, ele) {
-            var options = angular.extend(DEFAULTS, $scope.options);
-            var constructor = $(ele).rangeSlider;
-            if (options.type === "edit") {
-                constructor = $(ele).editRangeSlider;
-            } else if (options.type === "date") {
-                constructor = $(ele).dateRangeSlider;
-            }
 
-            if (!!$scope.options.jqOptions && !$scope.options.jqOptions.defaultValues) {
-                $scope.options.jqOptions.defaultValues = $scope.options.selectedRange;
-            }
+            var service = null;
 
-            var service = new JqrangeService(ele, constructor);
+            $scope.$on('recreateSlider', function() {
+                service.destroy();
+                create();
+            });
 
-            // Create the element
-            constructor.call($(ele), options.jqOptions);
-
-            // Watch external changes to selection and match on slider
-            $scope.$watch("options.selectedRange", function(nv, ov) {
-                // Only change values if there's actually a change
-                if (!!nv
-                    && !!ov
-                    && (nv.min.getTime() !== ov.min.getTime() || nv.max.getTime() !== ov.max.getTime())) {
-
-                    var bounds = service.values();
-                    if (!!nv && nv.min.getTime() !== bounds.min.getTime() && nv.max.getTime() !== bounds.max.getTime()) {
-                        service.values(nv.min, nv.max);
-                    } else {
-                        service.values(bounds.min, bounds.max);
-                    }
+            var create = function() {
+                var options = angular.extend(DEFAULTS, $scope.options);
+                var constructor = $(ele).rangeSlider;
+                if (options.type === "edit") {
+                    constructor = $(ele).editRangeSlider;
+                } else if (options.type === "date") {
+                    constructor = $(ele).dateRangeSlider;
                 }
-            });
 
-            // Watch for external changes to bounds and match on slider
-            $scope.$watch("options.jqOptions.bounds", function(nv, ov) {
-                if (!!nv
-                && !!ov
-                && (nv.min.getTime() !== ov.min.getTime() || nv.max.getTime() !== ov.max.getTime())) {
-                    var min, max;
-                    try {
-                        min = new Date(nv.min);
-                        max = new Date(nv.max);
-                        service.bounds(min, max);
-                    } catch(exception) {
-                        console.log("Invalid date");
-                    }
+                if (!!$scope.options.jqOptions && !$scope.options.jqOptions.defaultValues) {
+                    $scope.options.jqOptions.defaultValues = $scope.options.selectedRange;
                 }
-            });
 
-            // Watch for user changes to selection and notify angular.
-            $(ele).bind("userValuesChanged", function(evt, data) {
-                $scope.$apply((function() {
-                    $scope.options.selectedRange = data.values;
-                })());
-            });
+                service = new JqrangeService(ele, constructor);
 
-            // Watch for user changes to selection and notify angular.
-            $(ele).bind("valuesChanging", function(evt, data) {
-                $scope.$emit('sliderValuesChanging', data.values)
-            });
+                // Create the element
+                constructor.call($(ele), options.jqOptions);
 
-            // Pass the service out so external control of the component can be had
-            if (typeof options.onApiReady === "function") {
-                options.onApiReady(service);
+                // Watch external changes to selection and match on slider
+                $scope.$watch("options.selectedRange", function (nv, ov) {
+                    // Only change values if there's actually a change
+                    if (!!nv
+                        && !!ov
+                        && (nv.min.getTime() !== ov.min.getTime() || nv.max.getTime() !== ov.max.getTime())) {
+
+                        var bounds = service.values();
+                        if (!!nv && nv.min.getTime() !== bounds.min.getTime() && nv.max.getTime() !== bounds.max.getTime()) {
+                            service.values(nv.min, nv.max);
+                        } else {
+                            service.values(bounds.min, bounds.max);
+                        }
+                    }
+                });
+
+                // Watch for external changes to bounds and match on slider
+                $scope.$watch("options.jqOptions.bounds", function (nv, ov) {
+                    if (!!nv
+                        && !!ov
+                        && (nv.min.getTime() !== ov.min.getTime() || nv.max.getTime() !== ov.max.getTime())) {
+                        var min, max;
+                        try {
+                            min = new Date(nv.min);
+                            max = new Date(nv.max);
+                            service.bounds(min, max);
+                        } catch (exception) {
+                            console.log("Invalid date");
+                        }
+                    }
+                });
+
+                // Watch for user changes to selection and notify angular.
+                $(ele).bind("userValuesChanged", function (evt, data) {
+                    $scope.$apply((function () {
+                        $scope.options.selectedRange = data.values;
+                    })());
+                });
+
+                // Watch for user changes to selection and notify angular.
+                $(ele).bind("valuesChanging", function (evt, data) {
+                    $scope.$emit('sliderValuesChanging', data.values)
+                });
+
+                // Pass the service out so external control of the component can be had
+                if (typeof options.onApiReady === "function") {
+                    options.onApiReady(service);
+                }
             }
+
+            create();
         };
 
         return {
