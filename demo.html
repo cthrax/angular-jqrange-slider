@@ -12,6 +12,7 @@
 <div style="height: 400px; width: 600px;">
     <jqrange-slider options="options" ></jqrange-slider>
 </div>
+<button ng-click="redraw()">Redraw</button>
 <pre>{{range | json}}</pre>
 <div>
     Bounds min: <input type="date" ng-model="options.jqOptions.bounds.min"/>
@@ -25,5 +26,7 @@
 <div>
     Range max: <input type="date" ng-model="options.selectedRange.max" />
 </div>
+
+
 </body>
 </html>
